@@ -1,0 +1,14 @@
+<resources>
+    <string name="app_name">Room Demo</string>
+    <string name="name">Name</string>
+    <string name="add_record">ADD RECORD</string>
+    <string name="all_the_inserted_records">All the inserted records</string>
+    <string name="no_records_available">No records available</string>
+    <string name="enter_email_id">Enter email ID</string>
+    <string name="email_id">Email ID</string>
+    <string name="image">image</string>
+    <string name="update_record">Update Record</string>
+    <string name="enter_name">Enter Name</string>
+    <string name="update">UPDATE</string>
+    <string name="cancel">CANCEL</string>
+</resources>

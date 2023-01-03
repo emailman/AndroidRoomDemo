@@ -27,12 +27,12 @@ class ItemAdapter(
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        // val context = holder.itemView.context
         val item = items[position]
 
         holder.tvName.text = item.name
         holder.tvEmail.text = item.email
 
+        // Alternate background color for each row
         if (position % 2 == 0) {
             holder.llMain.setBackgroundColor(
                 ContextCompat.getColor(holder.itemView.context,

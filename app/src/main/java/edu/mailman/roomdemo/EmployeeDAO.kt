@@ -23,5 +23,4 @@ interface EmployeeDAO {
 
     @Query("SELECT * FROM `employee-data` WHERE id=:id")
     fun fetchEmployeesByID(id: Int): Flow<EmployeeEntity>
-
 }

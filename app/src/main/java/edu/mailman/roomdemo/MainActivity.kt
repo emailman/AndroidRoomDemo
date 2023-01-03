@@ -10,7 +10,6 @@ import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import edu.mailman.roomdemo.databinding.ActivityMainBinding
 import edu.mailman.roomdemo.databinding.DialogUpdateBinding
-// import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity() {
@@ -36,6 +35,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun addRecord(employeeDAO: EmployeeDAO) {
+        // Get the name and the email from the form
         val name = binding?.etName?.text.toString()
         val email = binding?.etEmailId?.text.toString()
 
@@ -46,6 +46,8 @@ class MainActivity : AppCompatActivity() {
                     applicationContext, "Record saved",
                     Toast.LENGTH_LONG
                 ).show()
+
+                // Clear the form
                 binding?.etName?.text?.clear()
                 binding?.etEmailId?.text?.clear()
             }
@@ -64,22 +66,25 @@ class MainActivity : AppCompatActivity() {
             val itemAdapter = ItemAdapter(employeesList,
                 { updateId ->
                     updateRecordDialog(updateId, employeeDAO)
-                })
-            { deleteId ->
-                lifecycleScope.launch {
-                    employeeDAO.fetchEmployeesByID(deleteId).collect {
-                        if (it != null) {
-                            deleteRecordAlertDialog(deleteId, employeeDAO, it)
+                },
+                { deleteId ->
+                    lifecycleScope.launch {
+                        employeeDAO.fetchEmployeesByID(deleteId).collect {
+                            // Make sure the entity exists before deleting it
+                            if (it != null) {
+                                deleteRecordAlertDialog(deleteId, employeeDAO, it)
+                            }
                         }
                     }
-                }
-            }
+                })
 
+            // Show the employee records
             binding?.rcvItemsList?.layoutManager = LinearLayoutManager(this)
             binding?.rcvItemsList?.adapter = itemAdapter
             binding?.rcvItemsList?.visibility = View.VISIBLE
             binding?.tvNoRecordsAvailable?.visibility = View.GONE
         } else {
+            // No employee records to show
             binding?.rcvItemsList?.visibility = View.GONE
             binding?.tvNoRecordsAvailable?.visibility = View.VISIBLE
         }
@@ -94,6 +99,7 @@ class MainActivity : AppCompatActivity() {
 
         lifecycleScope.launch {
             employeeDAO.fetchEmployeesByID(id).collect {
+                // Make sure the entity exists before filling dialog
                 if (it != null) {
                     // fill the employee name in the dialog
                     binding.etUpdateName.setText(it.name)

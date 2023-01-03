@@ -9,8 +9,8 @@ import edu.mailman.roomdemo.databinding.ItemsRowBinding
 
 class ItemAdapter(
     private val items: ArrayList<EmployeeEntity>,
-    // private val updateListener: (id: Int) -> Unit,
-    // private val deleteListener: (id: Int) -> Unit
+    private val updateListener: (id: Int) -> Unit,
+    private val deleteListener: (id: Int) -> Unit
 ) :
     RecyclerView.Adapter<ItemAdapter.ViewHolder>() {
     class ViewHolder(binding: ItemsRowBinding) : RecyclerView.ViewHolder(binding.root) {
@@ -27,7 +27,7 @@ class ItemAdapter(
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val context = holder.itemView.context
+        // val context = holder.itemView.context
         val item = items[position]
 
         holder.tvName.text = item.name
@@ -44,11 +44,11 @@ class ItemAdapter(
         }
 
         holder.ivEdit.setOnClickListener {
-            // updateListener.invoke(item.id)
+            updateListener.invoke(item.id)
         }
 
         holder.ivDelete.setOnClickListener {
-            // deleteListener.invoke(item.id)
+            deleteListener.invoke(item.id)
         }
     }
 
